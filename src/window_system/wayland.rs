@@ -13,14 +13,12 @@ use window_system::*;
 use std::cmp;
 
 fn log_callback(log_type: wlc::LogType, text: &str) {
-    slog_scope::scope(slog_scope::logger().new(o!("wlc1" => "wayland backend")), { ||
-        match log_type {
-            wlc::LogType::Info => info!("{}", text),
-            wlc::LogType::Warn => warn!("{}", text),
-            wlc::LogType::Error => error!("{}", text),
-            wlc::LogType::Wayland => debug!("[{:?}] {}", log_type, text)
-        }
-    });
+    match log_type {
+        wlc::LogType::Info => info!("{}", text),
+        wlc::LogType::Warn => warn!("{}", text),
+        wlc::LogType::Error => error!("{}", text),
+        wlc::LogType::Wayland => debug!("{}", text)
+    }
 }
 
 fn render_output(output: WlcOutput) {
